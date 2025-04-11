@@ -2,50 +2,45 @@
 const $ = selector => document.querySelector(selector)
 const $$ = selector => document.querySelectorAll(selector)
 
-if(localStorage.getItem('particlesMode') === null) localStorage.setItem('particlesMode', 'on')
-const toggleBtn = document.querySelector('#toggleParticles')
+// ELEMENTS
+const $smokeEffectArea = $('#smokeEffectArea')
+const $toggleSmokeEffectBtn = $('#toggleParticles')
+const $cards = $$('.card')
 
-const contenedorHumo = document.querySelector('#humo')
-let colorParticula = 'rgba(200 200 200 / 1)'
+let particleColor = localStorage.getItem('particleColor') ?? 'rgba(200 200 200 / 1)'
+let smokeEffectIsOn = JSON.parse(localStorage.getItem('smokeEffectIsOn')) ?? true
 
-function crearParticula(e) {
-  const particula = document.createElement('div')
-  particula.className = 'particula'
+// EVENTS
+document.addEventListener('mousemove', createParticle)
+$toggleSmokeEffectBtn.addEventListener('click', toggleSmokeEffect)
 
-  particula.style.left = `${e.clientX}px`
-  particula.style.top = `${e.clientY}px`
-  particula.style.background = `radial-gradient(circle, ${colorParticula} 0%, rgba(0 0 0 / 0) 80%)`
-  contenedorHumo.append(particula)
-
-  particula.addEventListener('animationend', () => {
-    particula.remove()
-  })
-}
-
-
-// Las cards cambian el color del humo generado
-const cards = document.querySelectorAll('.card')
-cards.forEach(card => {
-  card.addEventListener('mouseenter', (e) => {
-    colorParticula = `var(--col-${card.dataset.color})`
+$cards.forEach($card => {
+  $card.addEventListener('mouseenter', () => {
+    particleColor = `var(--col-${$card.dataset.color})`
+    localStorage.setItem('particleColor', particleColor)
   })
   
-  card.querySelector('.card__body').style.borderColor = `var(--col-${card.dataset.color})`
+  $card.querySelector('.card__body').style.borderColor = `var(--col-${$card.dataset.color})`
 })
 
-if(localStorage.getItem('particlesMode') !== '') {
-  document.addEventListener('mousemove', crearParticula)
+// FUNCTIONS
+function toggleSmokeEffect() {
+  smokeEffectIsOn = !smokeEffectIsOn
+  localStorage.setItem('smokeEffectIsOn', smokeEffectIsOn)
 }
 
-// TOGGLE
-toggleBtn.addEventListener('click', () => {
-  if(localStorage.getItem('particlesMode')) {
-    // Turn of
-    localStorage.setItem('particlesMode', '')
-    document.removeEventListener('mousemove', crearParticula)
-  }else {
-    // Turn on
-    localStorage.setItem('particlesMode', 'on')
-    document.addEventListener('mousemove', crearParticula)
-  }
-})
+function createParticle(event) {
+  if(smokeEffectIsOn === false) return
+
+  const $particle = document.createElement('div')
+  const {clientX, clientY} = event
+
+  $particle.className = 'particle'
+  $particle.style.left = `${clientX}px`
+  $particle.style.top = `${clientY}px`
+  $particle.style.background = `radial-gradient(circle, ${particleColor} 0%, rgba(0 0 0 / 0) 80%)`
+
+  $smokeEffectArea.append($particle)
+
+  $particle.addEventListener('animationend', () => $particle.remove())
+}

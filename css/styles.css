@@ -1,7 +1,7 @@
 /**
 *
 * SINOPSIS <-- Use Ctrl + F to find an specific block of code
-* for example: "Reset - Start", or "reset - End", or "sections -"
+* 
 *
 * - :root                                        (some "configurations" (variables))
 * - Reset
@@ -83,7 +83,7 @@ a {
   text-decoration: none;
 }
 
-input, button {
+input, button, select, textarea {
   background-color: transparent;
   border: none;
 
@@ -123,6 +123,14 @@ small {
   
   max-width: var(--max-width);
   width: 100%;
+}
+
+.content {
+  z-index: 1;
+
+  background-color: var(--col-neutral-1000);
+  box-shadow: var(--shadow);
+  border-radius: var(--rounded-value);
 }
 
 .sr-only {
@@ -248,15 +256,28 @@ main {
   display: inline-flex;
   justify-content: center;
 }
-/* Buttons - End *********************************************************************************************************************************/
 
+.btn--active {
+  background-color: var(--col-coco);
+}
+
+.btn-square {
+  padding: .5rem;
+}
+
+.btn-content {
+  background-color: transparent;
+  box-shadow: none;
+  padding: .5rem 0;
+}
+/* Buttons - End *********************************************************************************************************************************/
 
 
 
 /* Sections - Start ******************************************************************************************************************************/
 main { display: grid ;}
 
-.section-catalogo {
+.section-catalog {
   grid-template-areas: 
   "mobileBtn mobileBtn"
   "catalog catalog";
@@ -274,7 +295,6 @@ main { display: grid ;}
   grid-area: orderBy;
   justify-self: end;
   display: none;
-  margin-top: .5rem;
 }
 
 .mobile-btns {
@@ -293,33 +313,25 @@ main { display: grid ;}
   );
   gap: 1rem;
 }
+
+.products-container--list {
+  grid-template-columns: 1fr;
+}
 /* Products container - End **********************************************************************************************************************/
 
 
 
 /* Cards - Start *********************************************************************************************************************************/
 .card {
-  box-shadow: var(--shadow);
   overflow: hidden;
-  background-color: var(--col-neutral-1000);
-  border-radius: var(--rounded-value);
   position: relative;
 }
-
-/* .card__image {
-
-} */
 
 .card__body {
   padding: .5rem 1rem;
   border-bottom: 6px solid var(--col-claro);
   text-align: center;
 }
-
-/* .card__title {
-  padding: .5rem 1rem;
-  border-left: 6px solid var(--col-citrico);
-} */
 
 .card__price {
   font-size: 1.5rem;
@@ -341,12 +353,18 @@ main { display: grid ;}
   color: rgba(0 0 0 / .4);
   font-weight: 300;
 }
+
+.products-container--list .card {
+  grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: minmax(100px, 237px) minmax(200px, 1fr);
+}
 /* Cards - End ***********************************************************************************************************************************/
 
 
 
 /* Smoke Effect - Start **************************************************************************************************************************/
-#humo {
+#smokeEffectArea {
   pointer-events: none;
   position: fixed;
   top: 0;
@@ -355,7 +373,7 @@ main { display: grid ;}
   height: 100%;
 }
 
-.particula {
+.particle {
   pointer-events: none;
   position: absolute;
   width: 10px;
@@ -392,7 +410,7 @@ main { display: grid ;}
   bottom: -100dvh;
 
   background-color: rgba(0 0 0 / 0);
-  animation: slide-up 1s ease-in-out both;
+  /* animation: slide-up 1s ease-in-out both; */
 
   @media (min-width: 992px) {
     background-color: transparent;
@@ -411,6 +429,20 @@ main { display: grid ;}
   min-height: 60dvh;
   border-radius: var(--rounded-value) var(--rounded-value) 0 0;
   box-shadow: var(--shadow);
+  padding: .5rem 1rem;
+}
+
+.filter:not(:last-child) {
+  margin-bottom: 4rem;
+}
+
+.filter__body {
+  padding-left: 1rem;
+  padding-top: .5rem;
+}
+
+.filter__label {
+  display: block;
 }
 
 @keyframes slide-up {
@@ -429,17 +461,29 @@ main { display: grid ;}
 /* Media Querys - Start **************************************************************************************************************************/
 @media (min-width: 992px) {
   /* LG - Laptops */
-  .section-catalogo {
+  .section-catalog {
     grid-template-areas: 
-    ". mobileBtn . orderBy"
+    "desktopHeader desktopHeader desktopHeader desktopHeader"
     "filters catalog catalog catalog"
     "filters catalog catalog catalog";
     grid-template-columns: minmax(220px, .5fr) repeat(3, 1fr);
     gap: 1rem;
   }
 
+  .desktop-header {
+    grid-area: desktopHeader;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: .5rem;
+
+    button {
+      box-shadow: var(--shadow);
+    }
+  }
   .order-by {
     display: block;
+    padding: .5rem 1rem;
   }
 
   .mobile-btns {

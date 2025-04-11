@@ -1,21 +1,27 @@
 <?php
 
-$seccion = $_GET["seccion"] ?? "catalogo";
-$vista = $seccion;
-$seccionesValidas = [
-  "catalogo" => [
-    "titulo" => "Inicio"
+$section = $_GET["section"] ?? "catalog";
+$view = $section;
+$validSections = [
+  "catalog" => [
+    "title" => "Inicio"
   ],
-  "contacto" => [
-    "titulo" => "Contacto"
+  "contact" => [
+    "title" => "Contacto"
+  ],
+  "about-us" => [
+    "title" => "Sobre nosotros"
+  ],
+  "product-detail" => [
+    "title" => "Detalle de producto"
   ],
   "404" => [
-    "titulo" => "Página no encontrada"
+    "title" => "Página no encontrada"
   ]
 ];
 
-if (!array_key_exists($seccion, $seccionesValidas)) {
-  $vista = "404";
+if (!array_key_exists($section, $validSections)) {
+  $view = "404";
 }
 
 ?>
@@ -25,7 +31,7 @@ if (!array_key_exists($seccion, $seccionesValidas)) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lumina | <?= $seccionesValidas[$vista]["titulo"] ?></title>
+  <title>Lumina | <?= $validSections[$view]["title"] ?></title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -38,7 +44,7 @@ if (!array_key_exists($seccion, $seccionesValidas)) {
 
 <body>
 
-  <div id="humo"></div>
+  <div id="smokeEffectArea"></div>
   <header>
     <div class="bg-claro">
       <div class="container logo-container bg-claro text-oscuro">
@@ -48,24 +54,39 @@ if (!array_key_exists($seccion, $seccionesValidas)) {
     </div>
     <div class="bg-eucalipto">
       <div class="container sub-header">
-        <button id="toggleParticles" title="Desactivar/Activar particulas de humo">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
-            <path d="M16.5 8c0 1.5-.5 3.5-2.9 4.3.7-1.7.8-3.4.3-5-.7-2.1-3-3.7-4.6-4.6-.4-.3-1.1.1-1 .7 0 1.1-.3 2.7-2 4.4C4.1 10 3 12.3 3 14.5 3 17.4 5 21 9 21c-4-4-1-7.5-1-7.5.8 5.9 5 7.5 7 7.5 1.7 0 5-1.2 5-6.4 0-3.1-1.3-5.5-2.4-6.9-.3-.5-1-.2-1.1.3"></path>
+        <button id="toggleParticles" class="btn btn-square btn-content" title="Desactivar/Activar particulas de humo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-flame">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235" />
           </svg>
         </button>
         <nav class="nav-container">
           <ul>
-            <li><a href="index.php?seccion=catalogo">Inicio</a></li>
-            <li><a href="index.php?seccion=contacto">Contacto</a></li>
+            <li><a href="index.php?section=catalog">Velas Aromáticas</a></li>
+            <li><a href="index.php?section=about-us">Nosotros</a></li> <!-- (introducción) -->
+            <li><a href="index.php?section=contact">Contacto</a></li>
+
+            <!-- SECCIONES (las mismas que las de IDM)
+            " " = nada
+            "m" = maquetación
+            "x" = todo / gran parte / lo escencial terminado
+
+            - [ ] introducción
+            - [ ] libre
+            - [ ] detalle de producto
+            - [m] formulario de contacto
+            - [x] catálogo completo
+                      [ ] Mínimo 2 filtros para el 10
+            -->
           </ul>
         </nav>
       </div>
     </div>
   </header>
 
-  <main class="container section-<?= $seccion ?>">
+  <main class="container section-<?= $section ?>">
     <?php
-    require_once "views/$vista.php";
+    require_once "views/$view.php";
     ?>
   </main>
 

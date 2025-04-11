@@ -1,6 +1,8 @@
 <?php
 
-$productos = [
+// $categorias = [];
+
+$products = [
   [
     "id" => 1,
     "nombre" => "Lavanda",
@@ -150,7 +152,7 @@ $productos = [
       "Peso" => "220 gramos"
     ],
     "fragancia" => "Cítrico",
-    "categoria" => "cítrica",
+    "categoria" => "citrica",
     "notas_aromaticas" => [
       "Salida" => "Cítricos vibrantes",
       "Corazón" => "Piel de naranja",
@@ -348,7 +350,7 @@ $productos = [
       "Peso" => "180 gramos"
     ],
     "fragancia" => "Naranja y Clavo",
-    "categoria" => "cítrica",
+    "categoria" => "citrica",
     "notas_aromaticas" => [
       "Salida" => "Cítricos vibrantes",
       "Corazón" => "Piel de naranja",
